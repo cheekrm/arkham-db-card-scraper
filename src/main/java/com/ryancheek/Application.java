@@ -27,17 +27,17 @@ public class Application {
     private static final Logger LOGGER = Logger.getLogger(Application.class.getCanonicalName());
 
     private static final List<String> cardSetUrls = Arrays.asList(
-//            "https://arkhamdb.com/set/core",
-//            "https://arkhamdb.com/cycle/dwl",
-//            "https://arkhamdb.com/cycle/ptc",
-//            "https://arkhamdb.com/cycle/tfa",
-//            "https://arkhamdb.com/cycle/tcu",
-//            "https://arkhamdb.com/cycle/tde",
-//            "https://arkhamdb.com/cycle/tic",
-//            "https://arkhamdb.com/cycle/return",
-//            "https://arkhamdb.com/cycle/investigator",
-//            "https://arkhamdb.com/cycle/side_stories",
-//            "https://arkhamdb.com/cycle/promotional",
+            "https://arkhamdb.com/set/core",
+            "https://arkhamdb.com/cycle/dwl",
+            "https://arkhamdb.com/cycle/ptc",
+            "https://arkhamdb.com/cycle/tfa",
+            "https://arkhamdb.com/cycle/tcu",
+            "https://arkhamdb.com/cycle/tde",
+            "https://arkhamdb.com/cycle/tic",
+            "https://arkhamdb.com/cycle/return",
+            "https://arkhamdb.com/cycle/investigator",
+            "https://arkhamdb.com/cycle/side_stories",
+            "https://arkhamdb.com/cycle/promotional",
             "https://arkhamdb.com/cycle/parallel"
     );
 
