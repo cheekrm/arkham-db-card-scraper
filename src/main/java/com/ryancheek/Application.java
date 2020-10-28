@@ -5,6 +5,7 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.DomNodeList;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.ryancheek.model.Card;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -50,7 +51,7 @@ public class Application {
         final String arkhamDbUrlPrefix = "https://arkhamdb.com";
 
         cardSetUrls.stream()
-                .peek(cardSetUrl -> System.out.printf("Collecting cards for page %s", cardSetUrl))
+                .peek(cardSetUrl -> System.out.printf("Collecting cards for page %s\n", cardSetUrl))
                 .map(cardSetUrl -> {
                     try {
                         return client.getPage(cardSetUrl);
@@ -61,7 +62,6 @@ public class Application {
                 })
                 .map(setPage -> {
                     try {
-
                         final DomNodeList<DomNode> domNodes = setPage.querySelectorAll("a.spoiler.card-tip");
 
                         return domNodes.stream().map(node -> node.getAttributes().getNamedItem("data-code").getNodeValue())
@@ -111,23 +111,5 @@ public class Application {
                 LOGGER.log(Level.SEVERE, e.getMessage());
             }
         });
-    }
-}
-
-class Card {
-    final String name;
-    final String imgSrc;
-
-    public Card(String name, String imgSrc) {
-        this.name = name;
-        this.imgSrc = imgSrc;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getImgSrc() {
-        return imgSrc;
     }
 }
