@@ -78,7 +78,7 @@ public class Application {
 
                                         final String imgSrc = Optional.ofNullable(cardPage.querySelectorAll("img.img-responsive.img-vertical-card").get(0))
                                                 .map(imageNode -> imageNode.getAttributes().getNamedItem("src").getTextContent())
-                                                .orElse(fullyQualifiedUrl);
+                                                .orElse("No image found for " + fullyQualifiedUrl);
 
                                         return new Card(name, imgSrc);
                                     } catch (final Exception e) {
