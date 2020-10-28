@@ -95,10 +95,10 @@ public class Application {
                 })
                 .peek(stringCardMap -> System.out.printf("Page finished. %s cards collected.\n", stringCardMap.size()))
                 .reduce((firstMap, secondMap) ->
-                Stream.concat(firstMap.entrySet().stream(), secondMap.entrySet().stream())
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                                (countInFirstMap, countInSecondMap) -> countInFirstMap))
-        ).ifPresent(cardMap -> {
+                        Stream.concat(firstMap.entrySet().stream(), secondMap.entrySet().stream())
+                                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                                        (countInFirstMap, countInSecondMap) -> countInFirstMap))
+                ).ifPresent(cardMap -> {
 
             System.out.printf("%s total cards collected. Writing json to file.\n", cardMap.size());
 
