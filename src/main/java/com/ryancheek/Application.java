@@ -27,17 +27,17 @@ public class Application {
     private static final Logger LOGGER = Logger.getLogger(Application.class.getCanonicalName());
 
     private static final List<String> cardSetUrls = Arrays.asList(
-            "https://arkhamdb.com/set/core",
-            "https://arkhamdb.com/cycle/dwl",
-            "https://arkhamdb.com/cycle/ptc",
-            "https://arkhamdb.com/cycle/tfa",
-            "https://arkhamdb.com/cycle/tcu",
-            "https://arkhamdb.com/cycle/tde",
-            "https://arkhamdb.com/cycle/tic",
-            "https://arkhamdb.com/cycle/return",
-            "https://arkhamdb.com/cycle/investigator",
-            "https://arkhamdb.com/cycle/side_stories",
-            "https://arkhamdb.com/cycle/promotional",
+//            "https://arkhamdb.com/set/core",
+//            "https://arkhamdb.com/cycle/dwl",
+//            "https://arkhamdb.com/cycle/ptc",
+//            "https://arkhamdb.com/cycle/tfa",
+//            "https://arkhamdb.com/cycle/tcu",
+//            "https://arkhamdb.com/cycle/tde",
+//            "https://arkhamdb.com/cycle/tic",
+//            "https://arkhamdb.com/cycle/return",
+//            "https://arkhamdb.com/cycle/investigator",
+//            "https://arkhamdb.com/cycle/side_stories",
+//            "https://arkhamdb.com/cycle/promotional",
             "https://arkhamdb.com/cycle/parallel"
     );
 
@@ -47,7 +47,8 @@ public class Application {
         client.getOptions().setCssEnabled(false);
         client.getOptions().setJavaScriptEnabled(false);
 
-        final String urlPrefix = "https://arkhamdb.com/card/";
+        final String arkhamDbUrlPrefix = "https://arkhamdb.com";
+        final String urlPrefix = arkhamDbUrlPrefix + "/card/";
 
         cardSetUrls.stream()
                 .peek(cardSetUrl -> System.out.printf("Collecting cards for page %s\n", cardSetUrl))
@@ -73,11 +74,11 @@ public class Application {
 
                                         final String name = Optional.ofNullable(cardPage.querySelectorAll("a.card-name.card-tip").get(0))
                                                 .map(DomNode::getTextContent)
-                                                .map(rawCardName -> rawCardName.replaceAll("\n\\\\", ""))
+                                                .map(rawCardName -> rawCardName.replaceAll("[\n\\\\]", ""))
                                                 .orElse(UUID.randomUUID().toString());
 
                                         final String imgSrc = Optional.ofNullable(cardPage.querySelectorAll("img.img-responsive.img-vertical-card").get(0))
-                                                .map(imageNode -> imageNode.getAttributes().getNamedItem("src").getTextContent())
+                                                .map(imageNode -> arkhamDbUrlPrefix + imageNode.getAttributes().getNamedItem("src").getTextContent())
                                                 .orElse("No image found for " + fullyQualifiedUrl);
 
                                         return new Card(name, imgSrc);
