@@ -48,14 +48,13 @@ public class Application {
         client.getOptions().setJavaScriptEnabled(false);
 
         final String urlPrefix = "https://arkhamdb.com/card/";
-        final String arkhamDbUrlPrefix = "https://arkhamdb.com";
 
         cardSetUrls.stream()
                 .peek(cardSetUrl -> System.out.printf("Collecting cards for page %s\n", cardSetUrl))
                 .map(cardSetUrl -> {
                     try {
                         return client.getPage(cardSetUrl);
-                    } catch (IOException e) {
+                    } catch (final IOException e) {
                         e.printStackTrace();
                         return new HtmlPage(null, null, null);
                     }
@@ -74,6 +73,7 @@ public class Application {
 
                                         final String name = Optional.ofNullable(cardPage.querySelectorAll("a.card-name.card-tip").get(0))
                                                 .map(DomNode::getTextContent)
+                                                .map(rawCardName -> rawCardName.replaceAll("\n\\\\", ""))
                                                 .orElse(UUID.randomUUID().toString());
 
                                         final String imgSrc = Optional.ofNullable(cardPage.querySelectorAll("img.img-responsive.img-vertical-card").get(0))
@@ -99,11 +99,13 @@ public class Application {
                         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                                 (countInFirstMap, countInSecondMap) -> countInFirstMap))
         ).ifPresent(cardMap -> {
+
+            System.out.printf("%s total cards collected. Writing json to file.\n", cardMap.size());
+
             final ObjectMapper objectMapper = new ObjectMapper();
 
             try {
                 final String cardsJson = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cardMap);
-
                 final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File("cards.json")));
                 bufferedWriter.write(cardsJson);
                 bufferedWriter.close();
